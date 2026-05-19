@@ -6,8 +6,26 @@ An automated Computer Vision pipeline that detects vehicle license plates in ima
 
 ## ⚙️ Complete Project Pipeline & Workflow
 
-The system operates in a sequential **Detection → Recognition** pipeline. Here is the exact workflow of how an image is processed:
+The system operates in a sequential **Detection → Recognition** pipeline. Here is the visual flowchart of how an image is processed:
 
+```mermaid
+graph TD
+    A[Input Image: vehicle_image.jpeg] --> B(Load Image: cv2.imread)
+    B --> C{YOLOv8 Detection}
+    C -->|Predicts BBoxes| D{Confidence >= 0.25?}
+    D -->|No| X((Discard))
+    D -->|Yes| E{Aspect Ratio valid?}
+    E -->|No| X
+    E -->|Yes| F(Crop Plate Region)
+    F --> G(Upscale 4x)
+    G --> H{EasyOCR}
+    H -->|Raw Candidates| I(Text Cleaning)
+    I --> J(Candidate Selection)
+    J --> K(Draw Rectangles & Overlay)
+    K --> L[Save Image & Text File]
+```
+
+Here is the exact step-by-step breakdown:
 ### 1. Image Loading 📥
 - The system reads the input image (`vehicle_image.jpeg`) from the disk using **OpenCV**.
 - The image is loaded into memory as a 3D NumPy array (BGR format).
