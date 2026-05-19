@@ -4,7 +4,7 @@ An automated Computer Vision pipeline that detects vehicle license plates in ima
 
 ---
 
-## ⚙️ Complete Project Pipeline & Workflow
+##Complete Project Pipeline & Workflow
 
 The system operates in a sequential **Detection → Recognition** pipeline. Here is the visual flowchart of how an image is processed:
 
